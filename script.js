@@ -13,7 +13,7 @@ function getComputerChoice() {
     }
 }
 
-function playRound(playerSelection, computerSelection) {
+function getRoundResult(playerSelection, computerSelection) {
     let proccess = (str) => (str.toLowerCase().charAt(0).toUpperCase() + str.toLowerCase().slice(1));
     playerSelection = proccess(playerSelection);
     computerSelection = proccess(computerSelection);
@@ -27,28 +27,26 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game() {
-    let playerScore = 0;
-    let computerScore = 0;
+    playerScore = 0;
+    computerScore = 0;
     for (let i = 0; i < 5; i++) {
-        let playerChoice = prompt("What's your choice? ");
-        let computerChoice = getComputerChoice();
-        let roundResult = playRound(playerChoice, computerChoice);
-        roundResult.includes("You win!") ? playerScore++ : computerScore++;
-        console.log(roundResult);
+        console.log(round());
     }
     if (playerScore > computerScore) console.log("You win!\nCongratulations!");
     else if (computerScore > playerScore) console.log("Computer wins!");
     else {
-        while (playerScore == computerScore) {
-            let playerChoice = prompt("What's your choice? ");
-            let computerChoice = getComputerChoice();
-            let roundResult = playRound(playerChoice, computerChoice);
-            roundResult.includes("You Win!") ? playerScore++ : computerScore++;
-            console.log(roundResult);
-        }
-        if (playerScore > computerScore) console.log("You win!\nCongratulations!");
-        else if (computerScore > playerScore) console.log("Computer wins!");
+        while (playerScore == computerScore) console.log(round());
+        console.log(playerScore > computerScore ? "You win!\nCongratulations!" : "Computer wins!");
     }
 }
+
+function round() {
+    let roundResult = getRoundResult(prompt("What's your choice? "), getComputerChoice());
+    roundResult.includes("You win!") ? playerScore++ : computerScore++;
+    return roundResult;
+}
+
+let playerScore;
+let computerScore;
 
 game();
