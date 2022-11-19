@@ -21,29 +21,30 @@ function playRound(playerSelection) {
     playerSelection = proccessString(playerSelection);
     let computerSelection = proccessString(getComputerChoice());
     if (playerSelection == computerSelection)
-        console.log(`No winnner! ${playerSelection} and ${computerSelection}`);
-    else if (playerSelection == "Rock" && computerSelection == "Paper" || 
+        resultDiv.innerText = `No winnner! ${playerSelection} and ${computerSelection}`;
+    else if(playerSelection == "Rock" && computerSelection == "Paper" || 
             playerSelection == "Paper" && computerSelection == "Scissors" ||
             playerSelection == "Scissors" && computerSelection == "Rock") {
                 computerScore++;
-                console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
+                resultDiv.innerText = `You lose! ${computerSelection} beats ${playerSelection}`;
             }
     else {
         playerScore++;
-        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+        resultDiv.innerText = `You win! ${playerSelection} beats ${computerSelection}`;
     }
     roundCount++;
     if (roundCount >= 5) restartGame();
 }
 
 function restartGame() {
-    if (playerScore > computerScore) console.log("You win!\nCongratulations!");
-    else if (computerScore > playerScore) console.log("Computer wins!");
+    if (playerScore > computerScore) resultDiv.innerText = "You win!\nCongratulations!";
+    else if (computerScore > playerScore) resultDiv.innerText = "Computer wins!";
     else {
-        while (playerScore == computerScore) console.log(round());
-        console.log(playerScore > computerScore ? "You win!\nCongratulations!" : "Computer wins!");
+        while (playerScore == computerScore) resultDiv.innerText = round();
+        resultDiv.innerText = playerScore > computerScore ? "You win!\nCongratulations!" : "Computer wins!";
     }
-    console.log("\nNew game");
+    resultDiv.innerText += "\n\nPress a button to begin a new game";
+    //console.log("\nNew game");
     playerScore = 0, computerScore = 0, roundCount = 0;
 }
 
@@ -55,3 +56,5 @@ const buttons = Array.from(document.querySelectorAll('button'));
 buttons.forEach((button) => {
     button.addEventListener('click', () => playRound(button.innerText));
 });
+
+const resultDiv = document.querySelector(".result");
